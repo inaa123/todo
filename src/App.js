@@ -1,9 +1,13 @@
 import { useState, useRef, useCallback } from 'react';
+import { MdAddCircle } from 'react-icons/md'
+import './App.css' ;
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
 const App = () => {
+  const [selectedTodo, setSelectedTodo] = useState(null); 
+  const [insertToggle, setInsertToggle] = useState(false);
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -14,7 +18,7 @@ const App = () => {
       id: 2,
       text: '컴포넌트 스타일링하기',
       checked: true
-    },
+    }, 
     {
       id: 3,
       text: '일정관리 앱 만들어보기',
@@ -25,6 +29,13 @@ const App = () => {
   //고유값 id
   // ref를 사용해서 변수 담기. id는 렌더링 정보x
   const nextId = useRef(4);
+
+  const onInsertToggle = () => {
+    if(selectedTodo) {
+      setSelectedTodo(null);
+    }
+    setInsertToggle(prev => !prev);
+  };
 
   const onInsert = useCallback(
     text => {
@@ -56,11 +67,40 @@ const App = () => {
     },
     [todos],
   );
+  
+  const onChangeSelectedTodo = useCallback(
+    todo => {
+      setSelectedTodo(todo);
+    }
+  ); // onChangeSelectedTodo함수를 TodoListItem으로 보내준다.
+  
+  const onUpdate = useCallback(
+    (id, text) => {
+      onInsertToggle();
+      setTodos(todos => todos.map(todo => todo.id === id ? {...todo, text} : todo));
+    }
+  );
 
   return (
     <TodoTemplate>
-      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle}/>
-      <TodoInsert onInsert={onInsert} />
+      <TodoList 
+        todos={todos} 
+        onRemove={onRemove} 
+        onToggle={onToggle} 
+        onInsertToggle={onInsertToggle}
+        onChangeSelectedTodo={onChangeSelectedTodo} //TodoList통해서 TodoListItem까지..
+      />
+      <div className="addButton" onClick={onInsertToggle}>
+        <MdAddCircle />
+      </div>
+      {insertToggle && (
+        <TodoInsert
+          selectedTodo={selectedTodo}
+          onInsertToggle={onInsertToggle} 
+          onInsert={onInsert}
+          onUpdate={onUpdate}
+          />
+        )}
     </TodoTemplate>
   );
 };

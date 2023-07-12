@@ -1,5 +1,5 @@
-import './TodoTemplate.scss';
-import logo from '../img/logo.png';
+import './TodoTemplate.css';
+import logo from '../img/logo4.png';
 
 const TodoTemplate = ({ children }) => {
   return (

@@ -1,0 +1,61 @@
+.TodoListItem {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  &:hover {
+    .update {
+      display: flex;
+    }
+    .remove {
+      display: flex;
+    }
+  }
+}
+
+.checkbox {
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  &.checked { 
+    color: #a7a9ab;
+    text-decoration: line-through;
+  }
+}
+
+/* svg는 체크박스 아이콘 */
+.checkbox svg {
+  font-size: 1.5rem;
+  color: #7548cd;
+}
+
+.checkbox .text {
+  margin-left: 2rem;
+  flex: 1; /*flex 1 해당 위치 전체를 텍스트가 차지하도록.*/
+  font-size: 1.125rem;
+}
+
+.update {
+  display: none;
+  align-items: center;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+  color: #c0bebe;
+  cursor: pointer;
+  &:hover {
+    color: #fb73a0; 
+  }
+}
+
+.remove {
+  display: none;
+  align-items: center;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+  color: #c0bebe;
+  cursor: pointer;
+  &:hover {
+    color: #fb73a0; 
+  }
+}
